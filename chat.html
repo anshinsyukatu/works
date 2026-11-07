@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>hiroに聞く（試作）| hiroの作ったもの</title>
+<meta name="description" content="胃がんサバイバー hiro が note に書いた文章の中から、質問に合う一節をそのままお返しする検索型チャット（試作）。">
+<style>
+:root{
+  --bg:#ffffff; --ink:#3a352d; --sub:#8a8071; --line:#eee4d2;
+  --card:#f0dcbc; --accent:#b06a28; --bubble:#fdf6ea;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:"Hiragino Kaku Gothic ProN","Hiragino Sans","Noto Sans JP",sans-serif;line-height:1.75}
+.wrap{max-width:680px;margin:0 auto;padding:24px 16px 40px}
+.head{display:flex;gap:14px;align-items:center}
+.head img{width:64px;height:64px;border-radius:50%;object-fit:cover;border:2px solid var(--line)}
+.head h1{font-size:21px;margin:0}
+.head p{margin:2px 0 0;color:var(--sub);font-size:13px}
+.note-box{background:var(--bubble);border:1px solid var(--line);border-radius:14px;
+  padding:10px 14px;font-size:12.5px;color:var(--sub);margin:16px 0}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0}
+.chip{border:1px solid var(--line);background:#fff;border-radius:999px;
+  padding:6px 12px;font-size:13px;cursor:pointer;color:var(--ink)}
+.chip:hover{background:var(--bubble)}
+.log{display:flex;flex-direction:column;gap:14px;margin:18px 0}
+.msg-q{align-self:flex-end;background:var(--card);border-radius:16px 16px 4px 16px;
+  padding:10px 14px;max-width:85%;font-size:15px;white-space:pre-wrap}
+.msg-a{align-self:flex-start;max-width:92%;font-size:15px}
+.msg-a .intro{color:var(--sub);font-size:13px;margin-bottom:6px}
+.quote{background:#fff;border:1px solid var(--line);border-left:4px solid var(--accent);
+  border-radius:10px;padding:12px 14px;margin:0 0 8px;white-space:pre-wrap}
+.quote .src{display:block;margin-top:8px;font-size:12px;color:var(--sub)}
+.quote .src a{color:var(--accent)}
+.form{display:flex;gap:8px;position:sticky;bottom:0;background:var(--bg);padding:10px 0}
+.form input{flex:1;border:1px solid var(--line);border-radius:12px;padding:12px;font-size:16px}
+.form button{border:none;background:var(--accent);color:#fff;border-radius:12px;
+  padding:0 20px;font-size:15px;cursor:pointer}
+.foot{color:var(--sub);font-size:12px;text-align:center;margin-top:26px}
+.foot a{color:var(--accent)}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <div class="head">
+    <img src="img/profile.jpg" alt="hiroの顔写真">
+    <div>
+      <h1>hiroに聞く（試作）</h1>
+      <p>noteの文章から、hiroの言葉でお返しします</p>
+    </div>
+  </div>
+
+  <div class="note-box">
+    これは、hiroがnoteに書いた文章の中から、質問に合う一節を検索してそのまま表示する仕組みです。
+    AIが新しい文章を作っているわけではなく、hiro本人でもありません。
+    治療や体調の判断が必要なことは、主治医に相談してください。
+  </div>
+
+  <div class="chips" id="chips"></div>
+  <div class="log" id="log"></div>
+
+  <form class="form" id="form">
+    <input id="input" type="text" placeholder="聞きたいことを書いてください" autocomplete="off">
+    <button type="submit">聞く</button>
+  </form>
+
+  <p class="foot"><a href="https://anshinsyukatu.github.io/works/">hiroの作ったもの</a> ／ <a href="https://note.com/hiro_s1220">note（hiro）</a></p>
+</main>
+
+<script>
+const STARTERS = [
+  '手術は怖かったですか？',
+  '治療費はどれくらいかかりましたか？',
+  '仕事にはいつ戻れましたか？',
+  'お酒はどうしましたか？',
+  '家族にはどう伝えましたか？',
+  '食事で気をつけていることは？',
+  '終活って何から始めましたか？',
+  '今の気持ちは？'
+];
+
+let DOCS = [];   // {title, url, text}
+let IDF = {};    // bigram -> weight
+
+const FUNC = ['について','でしょうか','ましたか','ですか','ますか','ください','ほしい','どう','どれくらい','どのくらい','いつ','何を','して','いる','ある','なる','こと','もの','ため','よう','は','が','を','に','の','へ','と','や','も','か','ね','よ','で','す','し','た','て'];
+function cleanQuery(q){
+  let t = (q||'').replace(/[\s。、・「」『』（）()!?！？:：;；,.\"'〜~]/g,'');
+  for(const f of FUNC) t = t.split(f).join('');
+  return t;
+}
+function bigrams(s){
+  const t = (s||'').replace(/[\s。、・「」『』（）()!?！？:：;；,.\"'〜~\-ー]/g,'').toLowerCase();
+  const out = [];
+  for(let i=0;i<t.length-1;i++) out.push(t.slice(i,i+2));
+  return out;
+}
+
+async function load(){
+  const res = await fetch('corpus.json');
+  const data = await res.json();
+  const df = {};
+  for(const a of data.articles){
+    for(const p of a.passages){
+      DOCS.push({title:a.title, url:a.url, text:p});
+    }
+  }
+  for(const d of DOCS){
+    const seen = new Set(bigrams(d.title + d.text));
+    for(const b of seen) df[b] = (df[b]||0)+1;
+  }
+  const N = DOCS.length;
+  for(const b in df) IDF[b] = Math.log(1 + N/(1+df[b]));
+  const chips = document.getElementById('chips');
+  for(const q of STARTERS){
+    const el = document.createElement('button');
+    el.className='chip'; el.type='button'; el.textContent=q;
+    el.onclick=()=>ask(q);
+    chips.appendChild(el);
+  }
+  addAnswer(null, [{text:'こんにちは、hiroです。……と言いたいところですが、これは僕の文章を検索してお返しする仕組みです。聞きたいことを下のボタンから選ぶか、自由に書いてみてください。書いたことのある話なら、僕の言葉のまま出てきます。', title:'ごあいさつ', url:'https://note.com/hiro_s1220'}], '最初に');
+}
+
+function score(qb, d){
+  let s = 0;
+  const text = d.text, title = d.title;
+  for(const b of qb){
+    const w = IDF[b]; if(!w) continue;
+    let c = 0, i = text.indexOf(b);
+    while(i !== -1){ c++; i = text.indexOf(b, i+1); if(c>=2) break; }
+    s += w * c;
+    if(title.includes(b)) s += w * 1.5;
+  }
+  // 長い文章が有利になりすぎないよう、長さで割り引く
+  return s / (0.6 + Math.sqrt(text.length/120));
+}
+
+function search(q){
+  const qb = [...new Set(bigrams(cleanQuery(q)))];
+  if(!qb.length) return [];
+  const scored = DOCS.map(d=>({d, s:score(qb, d)})).filter(x=>x.s>0)
+    .sort((a,b)=>b.s-a.s);
+  if(!scored.length) return [];
+  const top = scored[0].s;
+  // 上位でも弱い一致は「見つからなかった」扱い
+  if(top < 1.2) return [];
+  const picked = [];
+  const usedTitles = new Set();
+  for(const x of scored){
+    if(picked.length>=2) break;
+    if(x.s < top*0.5) break;
+    if(usedTitles.has(x.d.title) && picked.length) continue;
+    usedTitles.add(x.d.title);
+    picked.push(x.d);
+  }
+  return picked;
+}
+
+function esc(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+function addQuestion(q){
+  const log = document.getElementById('log');
+  const div = document.createElement('div');
+  div.className='msg-q'; div.textContent=q;
+  log.appendChild(div);
+}
+
+function addAnswer(q, hits, introOverride){
+  const log = document.getElementById('log');
+  const div = document.createElement('div');
+  div.className='msg-a';
+  if(!hits.length){
+    div.innerHTML = '<p class="intro">すみません</p>' +
+      '<div class="quote">そのことは、まだ文章に書いていないみたいです。別の言い方で聞いてもらうか、<a href="https://note.com/hiro_s1220" target="_blank" rel="noopener">note</a>をのぞいてみてください。</div>';
+  } else {
+    const intro = introOverride || 'そのことについては、こんなふうに書いています。';
+    let html = '<p class="intro">'+esc(intro)+'</p>';
+    for(const h of hits){
+      html += '<div class="quote">'+esc(h.text)+
+        '<span class="src">出典：<a href="'+h.url+'" target="_blank" rel="noopener">'+esc(h.title)+'</a></span></div>';
+    }
+    div.innerHTML = html;
+  }
+  log.appendChild(div);
+  div.scrollIntoView({behavior:'smooth', block:'end'});
+}
+
+function ask(q){
+  q = (q||'').trim();
+  if(!q) return;
+  addQuestion(q);
+  addAnswer(q, search(q));
+  document.getElementById('input').value='';
+}
+
+document.getElementById('form').addEventListener('submit', e=>{
+  e.preventDefault();
+  ask(document.getElementById('input').value);
+});
+
+load().catch(()=>{
+  addAnswer(null, [], '');
+  document.querySelector('.msg-a .quote').textContent = '文章の読み込みに失敗しました。ページを開き直してみてください。';
+});
+</script>
+</body>
+</html>
