@@ -71,7 +71,32 @@
 <span class="card-go">→</span>
 </a>
 
+<div class="card card-invite">
+<div class="card-art" aria-hidden="true">
+<svg viewBox="0 0 72 72" width="64" height="64"><path d="M36 8 l5.5 16.5 L58 30 l-16.5 5.5 L36 52 l-5.5 -16.5 L14 30 l16.5 -5.5 z" class="art-body"/><circle cx="54" cy="52" r="5" class="art-body2"/><circle cx="18" cy="54" r="3.5" class="art-body2"/></svg>
+</div>
+<div class="card-body">
+<h2>AI「Muse」の招待</h2>
+<p>このページのものづくりで使っているAIです。よければ試してみてください。参加後48時間以内に設定で下のコードを入れると、あなたも私もMuseトークンをもらえます。招待枠には限りがあるので、先着順になります。</p>
+<button class="invite-code" id="copyCode" type="button" aria-label="紹介コード H8UP68 をコピーする">紹介コード：H8UP68</button>
+<p class="invite-note" id="copyNote">コードの部分をタップするとコピーできます。</p>
+<a class="invite-join" href="https://muse.ai/join">Museに参加する →</a>
+</div>
+</div>
+
 </section>
+
+<script>
+document.getElementById('copyCode').addEventListener('click', function () {
+  var note = document.getElementById('copyNote');
+  function done() { note.textContent = 'コード「H8UP68」をコピーしました。'; }
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText('H8UP68').then(done).catch(function () { note.textContent = '長押しで「H8UP68」をコピーしてください。'; });
+  } else {
+    note.textContent = '長押しで「H8UP68」をコピーしてください。';
+  }
+});
+</script>
 
 
 
