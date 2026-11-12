@@ -86,3 +86,49 @@ body {
 .invite-join:hover, .invite-join:focus-visible { text-decoration: underline; }
 
 .foot { text-align: center; margin-top: 34px; color: var(--sub); font-size: 12.5px; }
+
+/* アプリのタイル（縦長対策）：3つ横並び。色は固定値で指定 */
+.apps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.tile {
+  background: #f0dcbc;
+  border: 1px solid #eee4d2;
+  border-radius: 18px;
+  padding: 14px 6px 12px;
+  text-decoration: none;
+  color: #3a352d;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+.tile img { width: 72px; height: 72px; border-radius: 16px; }
+.tile-name { font-size: 16px; font-weight: 700; display: inline-flex; align-items: center; }
+.tile-cap { font-size: 11.5px; color: #8a8071; }
+.tile-name .bear-c {
+  width: 19px; height: 19px; margin-left: 3px;
+  border: 2px solid #d84336; border-radius: 50%;
+  background: #fffdf8; color: #d84336;
+  display: inline-grid; place-items: center;
+}
+.tile-name .bear-c svg { width: 13px; height: 13px; display: block; }
+
+/* ダークモードでも配色を変えない（白背景＋くまカラーで固定） */
+:root { color-scheme: light; }
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #ffffff;
+    --card: #f0dcbc;
+    --ink: #3a352d;
+    --sub: #8a8071;
+    --line: #eee4d2;
+    --accent: #d07f3a;
+    --art: #f2c894;
+    --art2: #b9d2ac;
+  }
+  body { background: #ffffff; color: #3a352d; }
+  .card { background: #f0dcbc; color: #3a352d; }
+  .tile { background: #f0dcbc; color: #3a352d; }
+  .tile-cap { color: #8a8071; }
+  .tile-name .bear-c { background: #fffdf8; color: #d84336; border-color: #d84336; }
+}
