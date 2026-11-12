@@ -35,6 +35,33 @@
   #official-notice h2 { color: #c62828; }
   #official-notice p { color: #7f1d1d; }
 }
+/* プライバシーの約束ボックス：ダークモードでも崩れないよう、背景色と文字色は固定値で指定 */
+#privacy-promise {
+  background: #f0dcbc;
+  border: 3px solid #8a6d3b;
+  border-radius: 12px;
+  padding: 16px 18px;
+  margin: 12px 0 8px;
+}
+#privacy-promise h2 {
+  color: #4e342e;
+  font-size: 18px;
+  font-weight: 800;
+  margin: 0 0 10px;
+  line-height: 1.5;
+}
+#privacy-promise p {
+  color: #3e2723;
+  font-size: 14.5px;
+  font-weight: 700;
+  line-height: 1.8;
+  margin: 0;
+}
+@media (prefers-color-scheme: dark) {
+  #privacy-promise { background: #f0dcbc; border-color: #8a6d3b; }
+  #privacy-promise h2 { color: #4e342e; }
+  #privacy-promise p { color: #3e2723; }
+}
 /* くまま（クママーク）：クマうら・くまログと同じ丸バッジ。色は固定値 */
 .hero h1 .bear-c {
   width: 34px; height: 34px; margin-left: 6px;
@@ -67,6 +94,11 @@
 <p>公式のアプリは、入力したデータを外部へ送信しません（あなたの端末の中だけに保存されます）。データを送信したり、ID・パスワードの入力を求めるものは、公式ではありません。絶対に入力しないでください。</p>
 <p>公式でないもの、改造されたものによるトラブルやお問い合わせには、対応できません。</p>
 <p>無断転載・再配布を確認した場合は、公開停止の申し入れや削除依頼など、必要な対応を取ります。</p>
+</section>
+
+<section id="privacy-promise" aria-label="プライバシーについての約束">
+<h2>🔒 プライバシーについての約束</h2>
+<p>ここで紹介しているアプリは、個人情報を集めない作りになっています。名前やメールアドレスの登録は不要で、会員登録もありません。入力したデータは、あなたの端末の中だけに保存され、外部へ送信されることは一切ありません。集めない・送らない仕組みなので、個人情報が漏れる心配のない、安全なアプリです。</p>
 </section>
 
 <section class="list">
