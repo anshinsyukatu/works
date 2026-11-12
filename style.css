@@ -47,6 +47,7 @@ body {
 }
 .card:hover, .card:focus-visible { transform: translateY(-2px); }
 .card-img { border-radius: 16px; flex: none; }
+.book-cover { width: 48px; height: 64px; object-fit: cover; object-position: center top; border-radius: 8px; }
 .card-art { flex: none; display: flex; }
 .card-art .art-body { fill: var(--art); }
 .card-art .art-body2 { fill: var(--art2); }
