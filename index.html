@@ -35,6 +35,18 @@
   #official-notice h2 { color: #c62828; }
   #official-notice p { color: #7f1d1d; }
 }
+/* くまま（クママーク）：クマうら・くまログと同じ丸バッジ。色は固定値 */
+.hero h1 .bear-c {
+  width: 34px; height: 34px; margin-left: 6px;
+  border: 2.6px solid #d84336; border-radius: 50%;
+  background: #fffdf8; color: #d84336;
+  display: inline-grid; place-items: center;
+  vertical-align: -4px;
+}
+.hero h1 .bear-c svg { width: 24px; height: 24px; display: block; }
+@media (prefers-color-scheme: dark) {
+  .hero h1 .bear-c { background: #fffdf8; color: #d84336; border-color: #d84336; }
+}
 </style>
 </head>
 <body>
@@ -42,8 +54,8 @@
 
 <header class="hero">
 <img class="hero-photo" src="img/profile.jpg" alt="hiroの顔写真" width="96" height="96">
-<h1>ひろぺ</h1>
-<p class="hero-sub">hiroの作ったもの一覧の公式HPです（略して「ひろぺ」）。<br>胃がんサバイバーが、AIと一緒にこつこつ作っています。<br>内容は随時更新されます。ブックマーク推奨です。</p>
+<h1>ひろぺ<span class="bear-c" role="img" aria-label="くまま"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="6.8" cy="5.4" r="2.7" fill="currentColor"/><circle cx="17.2" cy="5.4" r="2.7" fill="currentColor"/><path d="M12 20.8c-4.3 0-7-2.6-7-6.2C5 10.7 8.1 7.5 12 7.5s7 3.2 7 7.1c0 3.6-2.7 6.2-7 6.2Z" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linejoin="round"/><circle cx="9.4" cy="13.3" r="1.1" fill="currentColor"/><circle cx="14.6" cy="13.3" r="1.1" fill="currentColor"/><path d="M10.1 16.2c.6.5 1.2.8 1.9.8s1.3-.3 1.9-.8" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"/></svg></span></h1>
+<p class="hero-sub">hiroの作ったもの一覧 公式HPです<br>胃がんサバイバーがAIと作っています<br>随時更新中。ブックマーク推奨です</p>
 </header>
 
 <section id="official-notice" aria-label="無断転載・再配布についての大切なお知らせ">
@@ -110,17 +122,6 @@
 <span class="card-go">→</span>
 </a>
 
-<a class="card" href="https://anshinsyukatu.github.io/syukatsu-soudan/">
-<div class="card-art" aria-hidden="true">
-<svg viewBox="0 0 72 72" width="64" height="64"><path d="M12 14 h48 v30 H34 l-12 10 v-10 h-10 z" class="art-body"/><circle cx="26" cy="29" r="3.5" class="art-dot"/><circle cx="37" cy="29" r="3.5" class="art-dot"/><circle cx="48" cy="29" r="3.5" class="art-dot"/></svg>
-</div>
-<div class="card-body">
-<h2>終活相談</h2>
-<p>同じ経験をした人同士で、話せる場所です。</p>
-</div>
-<span class="card-go">→</span>
-</a>
-
 <div class="card card-invite">
 <div class="card-art" aria-hidden="true">
 <svg viewBox="0 0 72 72" width="64" height="64"><path d="M36 8 l5.5 16.5 L58 30 l-16.5 5.5 L36 52 l-5.5 -16.5 L14 30 l16.5 -5.5 z" class="art-body"/><circle cx="54" cy="52" r="5" class="art-body2"/><circle cx="18" cy="54" r="3.5" class="art-body2"/></svg>
@@ -133,6 +134,17 @@
 <a class="invite-join" href="https://muse.ai/join">Museに参加する →</a>
 </div>
 </div>
+
+<a class="card" href="https://anshinsyukatu.github.io/syukatsu-soudan/">
+<div class="card-art" aria-hidden="true">
+<svg viewBox="0 0 72 72" width="64" height="64"><path d="M12 14 h48 v30 H34 l-12 10 v-10 h-10 z" class="art-body"/><circle cx="26" cy="29" r="3.5" class="art-dot"/><circle cx="37" cy="29" r="3.5" class="art-dot"/><circle cx="48" cy="29" r="3.5" class="art-dot"/></svg>
+</div>
+<div class="card-body">
+<h2>終活相談</h2>
+<p>同じ経験をした人同士で、話せる場所です。</p>
+</div>
+<span class="card-go">→</span>
+</a>
 
 </section>
 
