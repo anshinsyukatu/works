@@ -66,6 +66,30 @@
 @media (prefers-color-scheme: dark) {
   .hero h1 .bear-c { background: #fffdf8; color: #d84336; border-color: #d84336; }
 }
+/* BGMボタン（画面右下・固定）：ダークモードでも崩れないよう、背景色と文字色は固定値で指定 */
+#bgm-toggle {
+  position: fixed;
+  right: 16px;
+  bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+  z-index: 1000;
+  min-height: 52px;
+  padding: 12px 22px;
+  background: #f0dcbc;
+  color: #3A352D;
+  border: 2.5px solid #b39b6d;
+  border-radius: 999px;
+  font-family: inherit;
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.3;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.28);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+#bgm-toggle:active { transform: translateY(1px); }
+@media (prefers-color-scheme: dark) {
+  #bgm-toggle { background: #f0dcbc; color: #3A352D; border-color: #b39b6d; }
+}
 </style>
 </head>
 <body>
@@ -171,6 +195,7 @@ document.getElementById('copyCode').addEventListener('click', function () {
   }
 });
 </script>
+<script src="bgm.js"></script>
 
 
 
