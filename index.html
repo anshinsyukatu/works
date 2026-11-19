@@ -66,6 +66,32 @@
 @media (prefers-color-scheme: dark) {
   .hero h1 .bear-c { background: #fffdf8; color: #d84336; border-color: #d84336; }
 }
+/* くままバッジへの©添付：バッジ自体は編集せず、表示側で右下に小さな©ピルを重ねる。色は固定値 */
+.bear-c { position: relative; }
+.bear-c::after {
+  content: "©";
+  position: absolute;
+  right: -5px;
+  bottom: -5px;
+  font-size: 9px;
+  font-weight: 700;
+  line-height: 1;
+  color: #3A352D;
+  background: #f0dcbc;
+  border: 1px solid #b39b6d;
+  border-radius: 999px;
+  padding: 1px 2.5px;
+  pointer-events: none;
+}
+.tile-name .bear-c::after {
+  font-size: 7.5px;
+  right: -4px;
+  bottom: -4px;
+  padding: 0.5px 2px;
+}
+@media (prefers-color-scheme: dark) {
+  .bear-c::after { color: #3A352D; background: #f0dcbc; border-color: #b39b6d; }
+}
 /* BGMボタン（画面右下・固定）：ダークモードでも崩れないよう、背景色と文字色は固定値で指定 */
 #bgm-toggle {
   position: fixed;
@@ -183,6 +209,8 @@
 </a>
 
 </section>
+
+<footer class="foot">© 2026 hiro</footer>
 
 <script>
 document.getElementById('copyCode').addEventListener('click', function () {

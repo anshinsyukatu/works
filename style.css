@@ -131,5 +131,6 @@ body {
   .card { background: #f0dcbc; color: #3a352d; }
   .tile { background: #f0dcbc; color: #3a352d; }
   .tile-cap { color: #8a8071; }
+  .foot { color: #8a8071; }
   .tile-name .bear-c { background: #fffdf8; color: #d84336; border-color: #d84336; }
 }
