@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ひろぺ | hiroの作ったもの 公式HP</title>
+<meta name="description" content="hiroの作ったもの一覧の公式HP「ひろぺ」。胃がんサバイバー hiro が、AIと一緒にこつこつ作ったもの置き場。占いサイト、本、動画、日記、相談の窓口。">
+<link rel="stylesheet" href="style.css">
+<style>
+/* 公式の注意喚起ボックス：ダークモードでも崩れないよう、背景色と文字色は固定値で指定 */
+#official-notice {
+  background: #fff5f5;
+  border: 3px solid #c62828;
+  border-radius: 12px;
+  padding: 16px 18px;
+  margin: 20px 0 8px;
+}
+#official-notice h2 {
+  color: #c62828;
+  font-size: 18px;
+  font-weight: 800;
+  margin: 0 0 10px;
+  line-height: 1.5;
+}
+#official-notice p {
+  color: #7f1d1d;
+  font-size: 14.5px;
+  font-weight: 700;
+  line-height: 1.8;
+  margin: 0 0 8px;
+}
+#official-notice p:last-child { margin-bottom: 0; }
+@media (prefers-color-scheme: dark) {
+  #official-notice { background: #fff5f5; border-color: #c62828; }
+  #official-notice h2 { color: #c62828; }
+  #official-notice p { color: #7f1d1d; }
+}
+/* ひろぺの約束（短い3行）：ダークモードでも崩れないよう、背景色と文字色は固定値で指定 */
+#hirope-promise {
+  background: #fffdf8;
+  border: 2.5px solid #d8c49a;
+  border-radius: 12px;
+  padding: 12px 18px;
+  margin: 16px 0 4px;
+}
+#hirope-promise p {
+  color: #3e2723;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.7;
+  margin: 4px 0;
+}
+@media (prefers-color-scheme: dark) {
+  #hirope-promise { background: #fffdf8; border-color: #d8c49a; }
+  #hirope-promise p { color: #3e2723; }
+}
+/* くまま（クママーク）：クマうら・くまログと同じ丸バッジ。色は固定値 */
+.hero h1 .bear-c {
+  width: 34px; height: 34px; margin-left: 6px;
+  border: 2.6px solid #d84336; border-radius: 50%;
+  background: #fffdf8; color: #d84336;
+  display: inline-grid; place-items: center;
+  vertical-align: -4px;
+}
+.hero h1 .bear-c svg { width: 24px; height: 24px; display: block; }
+@media (prefers-color-scheme: dark) {
+  .hero h1 .bear-c { background: #fffdf8; color: #d84336; border-color: #d84336; }
+}
+/* くままバッジへの©添付：バッジ自体は編集せず、表示側で右下に小さな©ピルを重ねる。色は固定値 */
+.bear-c { position: relative; }
+.bear-c::after {
+  content: "©";
+  position: absolute;
+  right: -5px;
+  bottom: -5px;
+  font-size: 9px;
+  font-weight: 700;
+  line-height: 1;
+  color: #3A352D;
+  background: #f0dcbc;
+  border: 1px solid #b39b6d;
+  border-radius: 999px;
+  padding: 1px 2.5px;
+  pointer-events: none;
+}
+.tile-name .bear-c::after {
+  font-size: 7.5px;
+  right: -4px;
+  bottom: -4px;
+  padding: 0.5px 2px;
+}
+@media (prefers-color-scheme: dark) {
+  .bear-c::after { color: #3A352D; background: #f0dcbc; border-color: #b39b6d; }
+}
+/* BGMボタン（画面右下・固定）：ダークモードでも崩れないよう、背景色と文字色は固定値で指定 */
+#bgm-toggle {
+  position: fixed;
+  right: 16px;
+  bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+  z-index: 1000;
+  min-height: 52px;
+  padding: 12px 22px;
+  background: #f0dcbc;
+  color: #3A352D;
+  border: 2.5px solid #b39b6d;
+  border-radius: 999px;
+  font-family: inherit;
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.3;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.28);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+#bgm-toggle:active { transform: translateY(1px); }
+@media (prefers-color-scheme: dark) {
+  #bgm-toggle { background: #f0dcbc; color: #3A352D; border-color: #b39b6d; }
+}
+</style>
+</head>
+<body>
+<main class="wrap">
+
+<header class="hero">
+
+<h1>ひろぺ<span class="bear-c" role="img" aria-label="くまま"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="6.8" cy="5.4" r="2.7" fill="currentColor"/><circle cx="17.2" cy="5.4" r="2.7" fill="currentColor"/><path d="M12 20.8c-4.3 0-7-2.6-7-6.2C5 10.7 8.1 7.5 12 7.5s7 3.2 7 7.1c0 3.6-2.7 6.2-7 6.2Z" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linejoin="round"/><circle cx="9.4" cy="13.3" r="1.1" fill="currentColor"/><circle cx="14.6" cy="13.3" r="1.1" fill="currentColor"/><path d="M10.1 16.2c.6.5 1.2.8 1.9.8s1.3-.3 1.9-.8" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"/></svg></span></h1>
+<p class="hero-sub">hiroの作ったもの一覧 公式HPです<br>胃がんサバイバーがAIと作っています<br>随時更新中。ブックマーク推奨です</p>
+</header>
+
+<section id="hirope-promise" aria-label="ひろぺの約束">
+<p>🆓 完全無課金・無登録で使えます（今後もこの方針です）</p>
+<p>🔒 個人情報が漏れる心配のない、安全なアプリです（集めない・端末の外へ送信しない作りです）</p>
+<p>📌 公式は、このページだけです</p>
+</section>
+
+<section id="official-notice" aria-label="無断転載・再配布についての大切なお知らせ">
+<h2>⚠ 大切なお知らせ（無断転載・改造・再配布の禁止）</h2>
+<p>このページが公式です。このページ以外で公開・配布されているアプリは、公式のものではありません。このサイトと、紹介しているアプリ・文章・画像の著作権は、制作者 hiro にあります。</p>
+<p>許可なくコピー・改造・アップロード・販売・再配布することは、著作権法により禁止されています。個人で使うこと、自分用に直して自分だけで使うことは自由です。</p>
+<p>公式のアプリは、入力したデータを外部へ送信しません（あなたの端末の中だけに保存されます）。データを送信したり、ID・パスワードの入力を求めるものは、公式ではありません。絶対に入力しないでください。</p>
+<p>公式でないものによるトラブルには対応できません。無断転載・再配布を確認した場合は、公開停止の申し入れや削除依頼など、必要な対応を取ります。</p>
+</section>
+
+<section class="list">
+
+<div class="apps">
+<a class="tile" href="https://anshinsyukatu.github.io/kumalog/">
+<img src="img/kumalog-icon.png" alt="くまログのアイコン" width="72" height="72">
+<span class="tile-name">くまログ<span class="bear-c" role="img" aria-label="くまま"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="6.8" cy="5.4" r="2.7" fill="currentColor"/><circle cx="17.2" cy="5.4" r="2.7" fill="currentColor"/><path d="M12 20.8c-4.3 0-7-2.6-7-6.2C5 10.7 8.1 7.5 12 7.5s7 3.2 7 7.1c0 3.6-2.7 6.2-7 6.2Z" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linejoin="round"/><circle cx="9.4" cy="13.3" r="1.1" fill="currentColor"/><circle cx="14.6" cy="13.3" r="1.1" fill="currentColor"/><path d="M10.1 16.2c.6.5 1.2.8 1.9.8s1.3-.3 1.9-.8" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"/></svg></span></span>
+<span class="tile-cap">記録</span>
+</a>
+<a class="tile" href="https://anshinsyukatu.github.io/kumane/">
+<img src="img/kumane-icon.png" alt="くまねーのアイコン" width="72" height="72">
+<span class="tile-name">くまねー<span class="bear-c" role="img" aria-label="くまま"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="6.8" cy="5.4" r="2.7" fill="currentColor"/><circle cx="17.2" cy="5.4" r="2.7" fill="currentColor"/><path d="M12 20.8c-4.3 0-7-2.6-7-6.2C5 10.7 8.1 7.5 12 7.5s7 3.2 7 7.1c0 3.6-2.7 6.2-7 6.2Z" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linejoin="round"/><circle cx="9.4" cy="13.3" r="1.1" fill="currentColor"/><circle cx="14.6" cy="13.3" r="1.1" fill="currentColor"/><path d="M10.1 16.2c.6.5 1.2.8 1.9.8s1.3-.3 1.9-.8" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"/></svg></span></span>
+<span class="tile-cap">お金</span>
+</a>
+<a class="tile" href="https://anshinsyukatu.github.io/kumaura/">
+<img src="img/kumaura-icon.png" alt="クマうらのアイコン" width="72" height="72">
+<span class="tile-name">クマうら<span class="bear-c" role="img" aria-label="くまま"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="6.8" cy="5.4" r="2.7" fill="currentColor"/><circle cx="17.2" cy="5.4" r="2.7" fill="currentColor"/><path d="M12 20.8c-4.3 0-7-2.6-7-6.2C5 10.7 8.1 7.5 12 7.5s7 3.2 7 7.1c0 3.6-2.7 6.2-7 6.2Z" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linejoin="round"/><circle cx="9.4" cy="13.3" r="1.1" fill="currentColor"/><circle cx="14.6" cy="13.3" r="1.1" fill="currentColor"/><path d="M10.1 16.2c.6.5 1.2.8 1.9.8s1.3-.3 1.9-.8" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"/></svg></span></span>
+<span class="tile-cap">占い</span>
+</a>
+</div>
+
+<a class="card" href="https://note.com/hiro_s1220">
+<img class="card-img" src="img/profile.jpg" alt="hiroの顔写真" width="64" height="64">
+<div class="card-body">
+<h2>note</h2>
+<p>胃がん宣告された日から始めた日記。</p>
+</div>
+<span class="card-go">→</span>
+</a>
+
+<a class="card" href="https://www.youtube.com/@anshin.syukatuhiro">
+<img class="card-img" src="img/youtube-icon.png" alt="YouTubeのアイコン" width="64" height="64">
+<div class="card-body">
+<h2>YouTube</h2>
+<p>日記を読み上げる短い動画。毎日19時に1話ずつ上がります。</p>
+</div>
+<span class="card-go">→</span>
+</a>
+
+<a class="card" href="https://anshinsyukatu.github.io/survivor-diary/">
+<img class="card-img book-cover" src="img/book-cover.jpg" alt="本『胃がんサバイバー日記』の表紙" width="48" height="64">
+<div class="card-body">
+<h2>本</h2>
+<p>胃がん日記をまとめた本と、AIと本を作った裏側の本。</p>
+</div>
+<span class="card-go">→</span>
+</a>
+
+<a class="card card-invite" href="https://muse.ai/join">
+<img class="card-img" src="img/muse-icon.png" alt="Museの公式アイコン" width="64" height="64">
+<div class="card-body">
+<h2>Muse</h2>
+<p>このページのものづくりで使っているAIです。よければ試してみてください。参加後48時間以内に設定で下のコードを入れると、あなたも私もMuseトークンをもらえます。招待枠には限りがあるので、先着順になります。</p>
+<span class="invite-code" id="copyCode" role="button" tabindex="0" aria-label="紹介コード H8UP68 をコピーする">紹介コード：H8UP68</span>
+<p class="invite-note" id="copyNote">コードの部分をタップするとコピーできます。</p>
+<span class="invite-join">Museに参加する →</span>
+</div>
+</a>
+
+<a class="card" href="https://anshinsyukatu.github.io/syukatsu-soudan/">
+<img class="card-img" src="img/soudan-icon.png" alt="終活相談のアイコン" width="64" height="64">
+<div class="card-body">
+<h2>終活相談</h2>
+<p>同じ経験をした人同士で、話せる場所です。</p>
+</div>
+<span class="card-go">→</span>
+</a>
+
+</section>
+
+<footer class="foot">© 2026 hiro</footer>
+
+<script>
+document.getElementById('copyCode').addEventListener('click', function (e) {
+  e.preventDefault();
+  e.stopPropagation();
+  var note = document.getElementById('copyNote');
+  function done() { note.textContent = 'コード「H8UP68」をコピーしました。'; }
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText('H8UP68').then(done).catch(function () { note.textContent = '長押しで「H8UP68」をコピーしてください。'; });
+  } else {
+    note.textContent = '長押しで「H8UP68」をコピーしてください。';
+  }
+});
+</script>
+<script src="bgm.js"></script>
+
+
+
+</main>
+</body>
+</html>
